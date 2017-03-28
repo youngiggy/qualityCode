@@ -13,7 +13,7 @@ var jsonParser = function () {
         },
         validateParam = function (param) {
             if (typeof param !== 'string') {
-                throw Error('INVALID_PARAM');
+                throw 'INVALID_PARAM';
             }
         };
 
