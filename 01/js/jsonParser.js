@@ -6,5 +6,15 @@
 var jsonParser = function () {
     'use strict';
 
-    return {};
+    var TOKEN = {
+            START: '{',
+            DELIMITER: ':',
+            END: '}'
+        },
+        object = {},
+        scope = object;
+
+    return function (str) {
+        return object;
+    };
 };
