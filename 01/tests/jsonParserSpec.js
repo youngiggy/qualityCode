@@ -12,8 +12,10 @@ describe('jsonParser', function () {
     });
 
     it('returns an object with valid string', function () {
-        var parsedObj = jsonParser(validJsonStrings[0]);
-        expect(typeof parsedObj).toEqual('object');
-        expect(parsedObj).toEqual({});
+        validJsonStrings.forEach(function (str) {
+            var parsedObj = jsonParser(str);
+            expect(typeof parsedObj).toEqual('object');
+            expect(parsedObj).toEqual({});
+        });
     });
 });
