@@ -15,6 +15,9 @@ var jsonParser = function () {
             if (typeof param !== 'string') {
                 throw 'INVALID_PARAM';
             }
+            if (!/^\{.*}$/.test(param)) {
+                throw 'NOT_JSON_ROOT_FORMAT';
+            }
         };
 
     return function (str) {

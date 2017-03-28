@@ -8,13 +8,16 @@ describe('jsonParser', function () {
         parser = jsonParser();
     });
 
-    it('requires parameter as a string', function () {
+    it('requires parameter as a string surround by braces', function () {
         var parsedObj,
-            strings = [
-                'dfsdfsdf',
-                ''
+            validStrings = [
+                '{a:b}',
+                '{a:{b:c}}',
+                '{}'
             ],
-            notStrings = [
+            notValidStrings = [
+                'dfsdfsfds',
+                '',
                 {},
                 true,
                 0,
@@ -22,12 +25,13 @@ describe('jsonParser', function () {
                 Infinity,
                 null
             ];
-        strings.forEach(function (item) {
+
+        validStrings.forEach(function (item) {
             expect(function () {
                 parsedObj = parser(item);
             }).not.toThrow();
         });
-        notStrings.forEach(function (item) {
+        notValidStrings.forEach(function (item) {
             expect(function () {
                 parsedObj = parser(item);
             }).toThrow();
@@ -35,7 +39,7 @@ describe('jsonParser', function () {
     });
 
     it('returns an object with valid string', function () {
-        var parsedObj = parser('');
+        var parsedObj = parser('{}');
         expect(typeof parsedObj).toEqual('object');
         expect(parsedObj).toEqual({});
     });
