@@ -11,10 +11,22 @@ var jsonParser = function () {
             DELIMITER: ':',
             END: '}'
         },
-        object = {},
-        scope = object;
+        validateParam = function (param) {
+            if (typeof param !== 'string') {
+                throw Error('INVALID_PARAM');
+            }
+        };
 
     return function (str) {
+        validateParam(str);
+
+        var queue = Array.from(str),
+            object = {},
+            scope = object,
+            ch;
+        while (queue.length > 0) {
+            ch = queue.shift();
+        }
         return object;
     };
 };
