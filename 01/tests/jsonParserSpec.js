@@ -8,15 +8,11 @@ describe('jsonParser', function () {
         parser = jsonParser();
     });
 
-    it('requires parameter as a string surround by braces', function () {
+    it('throws error when the argument is invalid format', function () {
         var parsedObj,
-            validStrings = [
-                '{a:b}',
-                '{a:{b:c}}',
-                '{}'
-            ],
             notValidStrings = [
                 'dfsdfsfds',
+                '{un:defined}',
                 '',
                 {},
                 true,
@@ -26,11 +22,6 @@ describe('jsonParser', function () {
                 null
             ];
 
-        validStrings.forEach(function (item) {
-            expect(function () {
-                parsedObj = parser(item);
-            }).not.toThrow();
-        });
         notValidStrings.forEach(function (item) {
             expect(function () {
                 parsedObj = parser(item);
@@ -38,9 +29,26 @@ describe('jsonParser', function () {
         });
     });
 
-    it('returns an object with valid string', function () {
-        var parsedObj = parser('{}');
-        expect(typeof parsedObj).toEqual('object');
-        expect(parsedObj).toEqual({});
+    it('parses an JSON object from a valid string', function () {
+        var parsedObj,
+            expectedObj,
+            validStrings = [
+                ['{}', {}],
+                ['{a:1}', {a:1}],
+                ['{a:{b:-1}}', {a:{b:-1}}],
+                ['{aa:{bbb:{cccc:"hey"}}}', {aa:{bbb:{cccc:"hey"}}}],
+                ['{"aa":{"bbb":{"cccc":"hey"}}}', {"aa":{"bbb":{"cccc":"hey"}}}],
+                ['{}', {}]
+            ];
+
+        validStrings.forEach(function (item) {
+            expect(function () {
+                parsedObj = parser(item[0]);
+                expectedObj = item[1];
+                // expectedObj = JSON.parse(item);
+            }).not.toThrow();
+            expect(typeof parsedObj).toEqual('object');
+            expect(parsedObj).toEqual(expectedObj);
+        });
     });
 });

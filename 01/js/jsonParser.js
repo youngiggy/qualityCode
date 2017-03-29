@@ -26,9 +26,38 @@ var jsonParser = function () {
         var queue = Array.from(str),
             object = {},
             scope = object,
-            ch;
+            key = '', valueStr = '',
+            ch, lastToken;
+
         while (queue.length > 0) {
             ch = queue.shift();
+            if (ch === TOKEN.START) {
+                lastToken = ch;
+                key = '';
+                continue;
+            }
+            if (ch === TOKEN.DELIMITER) {
+                lastToken = ch;
+                object[key] = {};
+                valueStr = '';
+                continue;
+            }
+            if (ch === TOKEN.END) {
+                if (key) {
+                    lastToken = ch;
+                    object[key] = eval('{' + valueStr + '}');//eval can be harmful
+                }
+                continue;
+            }
+
+            if (lastToken === TOKEN.START) {
+                key += ch;
+                continue;
+            }
+            if (lastToken === TOKEN.DELIMITER) {
+                valueStr += ch;
+                continue;
+            }
         }
         return object;
     };
