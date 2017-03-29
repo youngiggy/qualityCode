@@ -21,6 +21,8 @@ var jsonParser = function () {
         };
 
     return function (str) {
+        str = str.replace(/(^\s*|\s*$)/g, '');
+
         validateParam(str);
 
         var queue = Array.from(str),
@@ -31,6 +33,9 @@ var jsonParser = function () {
 
         while (queue.length > 0) {
             ch = queue.shift();
+            if (ch === ' ') {
+                continue;
+            }
             if (ch === TOKEN.START) {
                 lastToken = ch;
                 key = '';
