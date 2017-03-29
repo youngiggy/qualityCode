@@ -38,7 +38,7 @@ var jsonParser = function () {
             }
             if (ch === TOKEN.START) {
                 if (lastToken === TOKEN.DELIMITER) {
-                    scope = object[key];
+                    scope = scope[key];
                 }
                 lastToken = ch;
                 key = '';
