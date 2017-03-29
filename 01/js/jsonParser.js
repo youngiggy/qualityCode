@@ -59,7 +59,7 @@ var jsonParser = function () {
             }
 
             if (lastToken === TOKEN.START) {
-                key += ch;
+                key += (ch !== '"') ? ch : '';
                 continue;
             }
             if (lastToken === TOKEN.DELIMITER) {
