@@ -33,7 +33,7 @@ var jsonParser = function () {
 
         while (queue.length > 0) {
             ch = queue.shift();
-            if (ch === ' ') {
+            if (ch.replace(/\s/, '') === '') {
                 continue;
             }
             if (ch === TOKEN.START) {
