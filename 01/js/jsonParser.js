@@ -37,20 +37,23 @@ var jsonParser = function () {
                 continue;
             }
             if (ch === TOKEN.START) {
+                if (lastToken === TOKEN.DELIMITER) {
+                    scope = object[key];
+                }
                 lastToken = ch;
                 key = '';
                 continue;
             }
             if (ch === TOKEN.DELIMITER) {
                 lastToken = ch;
-                object[key] = {};
+                scope[key] = {};
                 valueStr = '';
                 continue;
             }
             if (ch === TOKEN.END) {
                 if (key) {
                     lastToken = ch;
-                    object[key] = eval('{' + valueStr + '}');//eval can be harmful
+                    scope[key] = eval('{' + valueStr + '}');//eval can be harmful
                 }
                 continue;
             }
